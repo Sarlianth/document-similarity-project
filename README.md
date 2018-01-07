@@ -6,7 +6,7 @@ This assignment will constitute 50% of the total marks for this module.
 You are required to develop a Java web application that enables two or more text documents to
 be compared for similarity. An overview of the system is given below:
 
-
+![1](https://user-images.githubusercontent.com/10263556/34650667-c82ce04a-f3bc-11e7-91d7-1e0b969c3d9e.jpg)
 
 ## Minimum Requirements
 Your implementation should include the following features:
