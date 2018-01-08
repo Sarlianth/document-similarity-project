@@ -1,0 +1,41 @@
+package ie.gmit.sw;
+
+import java.util.List;
+
+public class Document {
+	private List shingleList;
+	private String docID;
+	private String name;
+	
+	public Document(String docID, String name, List shinglelist) {
+		super();
+		this.docID = docID;
+		this.name =  name;
+		this.shingleList = shinglelist;
+	}
+
+	public List getShinglelist() {
+		return shingleList;
+	}
+
+	public void setShinglelist(List shinglelist) {
+		this.shingleList = shinglelist;
+	}
+
+	public String getDocID() {
+		return docID;
+	}
+
+	public void setDocID(String docID) {
+		this.docID = docID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+}

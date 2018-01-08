@@ -1,0 +1,11 @@
+package ie.gmit.sw;
+
+import java.util.List;
+
+public interface DBinterface {
+
+	public List<Document> getDocuments();
+	
+	public  void addDocumentsToDatabase(Document doc);
+	
+}

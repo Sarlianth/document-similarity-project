@@ -1,0 +1,100 @@
+package ie.gmit.sw;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.TreeSet;
+
+/*
+ * Author: Adrian Sypos
+ * Student number: G00309646
+ * Jaccard class - this class is used to generate the min hashes used to compute jaccard
+ */
+
+public class Jaccard {
+	
+	private List<Document> dList = new ArrayList<Document>();
+	private Document d;
+	private TreeSet<Integer> hashes = new TreeSet<Integer>();
+	private List<Integer> newDocs = new ArrayList<Integer>();
+	private List<Integer> prevDocs = new ArrayList<Integer>();
+	private List<Integer> common = new ArrayList<Integer>();
+	private List<Result> rList = new ArrayList<Result>();
+	private final int SET_MAX = 200;
+	private double jaccard;
+	private Result result;
+	
+	/*
+	 * Public constructor with params
+	 */
+	public Jaccard(List<Document> dList, Document d) {
+		super();
+		this.dList = dList;
+		this.d = d;
+	}
+	
+	/*
+	 * Method to compute jaccard
+	 */
+	public List Compute()
+	{
+		hashes = generateNumbers();
+		newDocs = generateMinHashes(d);
+		for(Document doc : dList)
+		{
+			prevDocs = generateMinHashes(doc);
+			common.addAll(newDocs);
+			common.retainAll(prevDocs);
+			jaccard = ((double)common.size()) / newDocs.size();
+			result = new Result(d.getName(),doc.getName(),jaccard);
+			rList.add(result);
+			common.clear();
+		}
+		
+		return rList;
+	}
+	
+	/*
+	 * Method to generate random hashes
+	 */
+	public TreeSet<Integer> generateNumbers()
+	{
+		hashes = new TreeSet<Integer>();
+		Random r = new Random();
+		for(int i=0; i<SET_MAX;i++)
+		{
+			hashes.add(r.nextInt());
+		}
+		
+		return hashes;
+		
+	}
+	
+	/*
+	 * Method to generate min hashes
+	 * References: http://shirleyisnotageek.blogspot.ie/2015/03/min-hash.html
+	 */
+	public List<Integer> generateMinHashes(Document doc)
+	{
+		List<Integer> temp = new ArrayList<Integer>();
+		List<Shingle> s = new ArrayList<Shingle>();
+		s = doc.getShinglelist();
+		
+		for(Integer hash : hashes)
+		{
+			int min = Integer.MAX_VALUE;
+			for(int i = 0 ; i < s.size(); i++)
+			{
+				int minHash = s.get(i).getHashCode()^hash;
+		        if(minHash < min)
+			      {
+			    	  min = minHash;
+			      }
+				
+			}
+			temp.add(min);
+		}
+		
+		return temp;
+	}
+}

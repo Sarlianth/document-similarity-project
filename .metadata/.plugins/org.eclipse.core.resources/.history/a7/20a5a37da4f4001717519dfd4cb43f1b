@@ -1,0 +1,50 @@
+package ie.gmit.sw;
+
+import java.util.List;
+
+/*
+ * Author: Adrian Sypos
+ * Student number: G00309646
+ * Document class containing blueprints for Document object
+ */
+
+public class Document {
+	private List shingleList;
+	private String docID;
+	private String name;
+	
+	/*
+	 * Public params constructor
+	 */
+	public Document(String docID, String name, List shingleList) {
+		super();
+		this.docID = docID;
+		this.name =  name;
+		this.shingleList = shingleList;
+	}
+
+	public List getShinglelist() {
+		return shingleList;
+	}
+
+	public void setShinglelist(List shinglelist) {
+		this.shingleList = shinglelist;
+	}
+
+	public String getDocID() {
+		return docID;
+	}
+
+	public void setDocID(String docID) {
+		this.docID = docID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+}

@@ -1,0 +1,57 @@
+package ie.gmit.sw;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import com.db4o.ObjectContainer;
+
+public class Worker extends Thread{
+	private BlockingQueue<Job> inQueue = new ArrayBlockingQueue<Job>(100);
+	private BlockingQueue<List<Result>> outQueue = new ArrayBlockingQueue<List<Result>>(100);
+	private Job j = null;
+	private ObjectContainer db = null;
+	private List<Document> dList = new ArrayList<Document>();
+	private List<Result> rList = new ArrayList<Result>();
+	private Jaccard cj;
+	
+	//constructor with args inqueue and outqueue
+	public Worker() {}
+	
+	//run method which runs our jobs
+		public void run() {
+			//keeps running
+			while(true) {
+				//checks queue every 10 second
+				inQueue = QueueManager.getInQueue();
+				j = inQueue.poll();
+				//if j is null do nothing till job is available
+				if(j != null)
+				{
+					DBworker db;
+					try {
+						db = new DBworker();
+						//db.addDocumentsToDatabase(j.getDoc());
+						dList = db.getDocuments();
+						cj = new Jaccard(dList,j.getDoc());
+						rList = cj.Compute();
+						db.addDocumentsToDatabase(j.getDoc());
+						db.closeDB();
+						
+						
+						//System.out.println(dList.size());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					// compare document to other documents in database
+					
+					// return result to user outqueue
+					System.out.println("list size result"+rList.size());
+					QueueManager.addToOutQueue(rList);
+					outQueue =  QueueManager.getOutQueue();
+				}
+			}
+		}
+}

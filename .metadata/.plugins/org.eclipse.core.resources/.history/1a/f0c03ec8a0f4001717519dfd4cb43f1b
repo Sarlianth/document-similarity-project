@@ -1,0 +1,135 @@
+package ie.gmit.sw;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import com.db4o.Db4oEmbedded;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import com.db4o.config.EmbeddedConfiguration;
+import com.db4o.ta.TransparentActivationSupport;
+import com.db4o.ta.TransparentPersistenceSupport;
+import xtea_db4o.XTEA;
+import xtea_db4o.XTeaEncryptionStorage;
+
+/*
+ * Author: Adrian Sypos
+ * Student number: G00309646
+ * Database worker class implementing the DBinterface
+ * This class is responsible for initializing the database
+ * IMPORTANT!!! PLEASE CHANGE THE DIRECTORY BELOW TO YOUR OWN DIRECTORY ON OUR COMPUTER [WebContent/WEB-INT/lib/files]
+ */
+
+public class DBworker implements DBinterface {
+	private ObjectContainer db = null;
+	private List<Document> dList = new ArrayList<Document>();
+	private ShingleWorker s;
+	private List<Shingle> sList = new ArrayList<Shingle>();
+	private Document doc;
+	
+	/*
+	 * DBWorker constructor without params
+	 * Using the XTEA library for encryption
+	 * Opening local database for client / server 
+	 */
+	public DBworker() throws IOException {
+		EmbeddedConfiguration config = Db4oEmbedded.newConfiguration();
+		config.common().add(new TransparentActivationSupport()); //Real lazy. Saves all the config commented out below
+		config.common().add(new TransparentPersistenceSupport()); //Lazier still. Saves all the config commented out below
+		config.common().updateDepth(7); //Propagate updates
+		
+		config.file().storage(new XTeaEncryptionStorage("password", XTEA.ITERATIONS64));
+
+		db = Db4oEmbedded.openFile(config, "documents.data");
+		dList = getDocuments();
+		
+		if(dList.size() == 0) {
+			init();
+		}
+
+		showDocuments();
+	}
+
+	/*
+	 * Init method, that is being called if the documentList is empty
+	 * Please change the directory below to your own where text files are held
+	 * This method loops through the directory specified and reads in the files converting them to shingles and then saves them into the database
+	 */
+	private void init() throws IOException {
+		int i = 0;
+		File dir = new File("C:/Users/Adrian/Desktop/projectOOP/measure-similarity/WebContent/WEB-INF/lib/files");
+		for (File file : dir.listFiles()) {
+	   	   i++;
+		   s = new ShingleWorker(file, "r"+i);
+		   sList = s.createShingles();
+		   doc = new Document("r"+i, file.getName(), sList);
+		   //save this
+		   dList.add(doc);
+		}
+		addFilesToDatabase();
+	}
+	
+	/*
+	 * Method to add files into the database
+	 */
+	private void addFilesToDatabase(){
+		for(Document d: dList)
+		{
+			db.store(d);
+		}
+		db.commit();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see ie.gmit.sw.DBinterface#addDocuments(ie.gmit.sw.Document)
+	 */
+	public void addDocuments(Document d) {
+		db.store(d);
+		
+		db.commit();	
+	}
+	
+	/*
+	 * Method to show documents from the database
+	 * An objectSet is a specialised list for storing results from queries
+	 */
+	public void showDocuments()
+	{
+		ObjectSet<Document> documents = db.query(Document.class);
+		for (Document document : documents) {
+			System.out.println("[Document] " + document.getName() + "\t\t\tDatabase object ID: " + db.ext().getID(document));
+
+			db.commit();
+		}
+	}
+	
+	public void closeDB()
+	{
+		db.close();
+	}
+	
+	public List getDocuments()
+	{
+		List<Document> temp = new ArrayList<Document>();
+		ObjectSet<Document> documents = db.query(Document.class);
+		for (Document document : documents) {
+			temp.add(document);
+			db.commit();
+		}
+		return temp;
+		
+	}
+	
+	public static void main(String[] args) throws IOException
+	{
+		new DBworker();
+	}
+	
+}
+	
+	
+
+

@@ -1,0 +1,19 @@
+package ie.gmit.sw;
+
+public class Job {
+	private Document doc;
+
+	public Job(Document doc) {
+		super();
+		this.doc = doc;
+	}
+
+	public Document getDoc() {
+		return doc;
+	}
+
+	public void setDoc(Document doc) {
+		this.doc = doc;
+	}	
+	
+}
