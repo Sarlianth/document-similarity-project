@@ -30,6 +30,18 @@ The **Apache Tomcat®** software is an open source implementation of the Java Se
 ## UML Design
 ![UML](https://github.com/Sarlianth/document-similarity-project/blob/master/UML.jpg)
 
+## How to run
+1. Clone the repository using the following command: `git clone https://github.com/Sarlianth/document-similarity-project.git`
+2. Note the measure-similarity.war file
+3. Import the WAR file into the WebApps folder in Tomcat directory
+4. Run Tomcat with the following command `startup`
+5. Visit the following website: http://localhost:8080/measure-similarity/
+
+## How to use
+Once you have the project up and running you can upload your own text file and it will automatically measure the similarity against the files in the database. The uploaded file will autmatically be saved into the database for future comparisons.
+
+If there will be a problem with reading files to database please change the directory in DBworker.java, however there should be no problem whatsoever.
+
 ## References
 * https://www.java.com/en/download/faq/whatis_java.xml
 * https://en.wikipedia.org/wiki/Db4o
