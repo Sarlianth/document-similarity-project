@@ -45,6 +45,9 @@ Once you have the project up and running you can upload your own text file and i
 
 If there will be a problem with reading files to database please change the directory in DBworker.java, however there should be no problem whatsoever.
 
+## JavaDocs
+In order to view the java docs, please clone the repository and navigate to -> **measure-similarity** -> **docs** -> and open **index.html**
+
 ## References
 * https://www.java.com/en/download/faq/whatis_java.xml
 * https://en.wikipedia.org/wiki/Db4o
