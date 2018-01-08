@@ -35,10 +35,10 @@ The **Apache Tomcat®** software is an open source implementation of the Java Se
 
 ## How to run
 1. Clone the repository using the following command: `git clone https://github.com/Sarlianth/document-similarity-project.git`
-2. Note the measure-similarity.war file
+2. Note the jaccard.war file
 3. Import the WAR file into the WebApps folder in Tomcat directory
 4. Run Tomcat with the following command `startup`
-5. Visit the following website: http://localhost:8080/measure-similarity/
+5. Visit the following website: http://localhost:8080/jaccard/
 
 ## How to use
 Once you have the project up and running you can upload your own text file and it will automatically measure the similarity against the files in the database. The uploaded file will autmatically be saved into the database for future comparisons.
