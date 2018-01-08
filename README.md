@@ -27,6 +27,9 @@ The **Apache Tomcat®** software is an open source implementation of the Java Se
 #### Eclipse
 **Eclipse** is an integrated development environment (IDE) used in computer programming, and is the most widely used Java IDE. It contains a base workspace and an extensible plug-in system for customizing the environment. Eclipse is written mostly in Java and its primary use is for developing Java applications, but it may also be used to develop applications in other programming languages via plug-ins, including Ada, ABAP, C, C++, C#, COBOL, D, Fortran, Haskell, JavaScript, Julia, Lasso, Lua, NATURAL, Perl, PHP, Prolog, Python, R, Ruby (including Ruby on Rails framework), Rust, Scala, Clojure, Groovy, Scheme, and Erlang. It can also be used to develop documents with LaTeX (via a TeXlipse plug-in) and packages for the software Mathematica. Development environments include the Eclipse Java development tools (JDT) for Java and Scala, Eclipse CDT for C/C++, and Eclipse PDT for PHP, among others.
 
+## UML Design
+![UML](https://github.com/Sarlianth/document-similarity-project/blob/master/UML.jpg)
+
 ## References
 * https://www.java.com/en/download/faq/whatis_java.xml
 * https://en.wikipedia.org/wiki/Db4o
